@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import InputDiv from "./InputDiv";
+
 function hasNumber(str) {
 	return (/\d/.test(str));
 }
@@ -113,21 +115,9 @@ const SignUp = () => {
 	return (
 		<div className="user-signup">
 			<form onSubmit={onSubmit}>
-				<div>
-					<label>Usuário</label>
-					<input id="user" type="text" name="user" onChange={onChange} value={values.user} />
-					{values.errors.username && <label>{values.errors.username}</label>}
-				</div>
-				<div>
-					<label>Password</label>
-					<input id="password" type="password" name="password" onChange={onChange} value={values.password} />
-					{errorsPasswordLabels}
-				</div>
-				<div>
-					<label>Comfirmação Password</label>
-					<input id="conf-password" type="password" name="confPassword" onChange={onChange} value={values.confPassword} />
-					{values.errors.confPassword && <label>{values.errors.confPassword}</label>}
-				</div>
+				<InputDiv text="Usuário" id="user" type="text" name="user" onChange={onChange} value={values.user} errors={values.errors.username} />
+				<InputDiv text="Password" id="password" type="password" name="password" onChange={onChange} value={values.password} errors={values.errors.password} />
+				<InputDiv text="Confirmação Password" id="conf-password" type="password" name="confPassword" onChange={onChange} value={values.confPassword} errors={values.errors.confPassword} />
 				<button>Registrar</button>
 			</form>
 		</div>
