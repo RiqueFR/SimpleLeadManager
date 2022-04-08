@@ -66,5 +66,5 @@ export default function validate(username, password, confPassword) {
 			valid = false;
 		}
 	}
-	return (valid, errors);
+	return [valid, errors];
 }
