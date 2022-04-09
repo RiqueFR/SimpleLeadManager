@@ -7,6 +7,7 @@ import {
 	Route
 } from 'react-router-dom';
 import './App.css';
+import Lead from './components/Lead';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
 		  <div className="App">
 			  <Routes>
 				  <Route exact path="/" element={<h1>Home</h1>} />
-				  <Route path="/lead" element={<NewLead />} />
+				  <Route path="/lead/new" element={<NewLead />} />
+				  <Route path="/lead" element={<Lead />} />
 				  <Route path="/cadastro" element={<SignUp />} />
 			  </Routes>
 		  </div>
