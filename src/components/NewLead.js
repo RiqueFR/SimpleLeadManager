@@ -5,7 +5,7 @@ import CheckboxDiv from "./CheckboxDiv";
 import InputDiv from "./InputDiv";
 
 function initialState() {
-	return { name: '', phone: '', mail: '', valid: false,
+	return { name: '', phone: '', mail: '', valid: false, all: false,
 		errors: {
 			name: [],
 			phone: [],
@@ -13,7 +13,6 @@ function initialState() {
 			checkbox: []
 		},
 		checkbox: {
-			all: false,
 			rpa: false,
 			digProd: false,
 			analystics: false,
@@ -54,19 +53,26 @@ const NewLead = () => {
 	function onCheck(event) {
 		const { checked, name } = event.target;
 
-		// if the chexkbox for check all is checked, check all chexkboxes
-		if (name === "all" && checked) { 
-			setValues({
-				...values,
-				checkbox: {
-					...values.checkbox,
-					all: true,
-					rpa: true,
-					digProd: true,
-					analystics: true,
-					bpm: true
-				}
-			});	
+		// the all checkbox have a different behavior
+		if (name === "all") { 
+			// if it is checked, all other checkboxes need to be checked too
+			if (checked) {
+				setValues({
+					...values,
+					all: checked,
+					checkbox: {
+						rpa: true,
+						digProd: true,
+						analystics: true,
+						bpm: true
+					}
+				});
+			} else { // if not, only the all checkbox needs to change
+				setValues({
+					...values,
+					all: checked
+				});
+			}
 		} else {
 			setValues({
 				...values,
@@ -100,7 +106,7 @@ const NewLead = () => {
 					<InputDiv text="Email" id="mail" type="text" name="mail" onChange={onChange} value={values.mail} errors={values.errors.mail} />
 				</div>
 				<div>
-					<CheckboxDiv text="Marcar Todos" id="all" name="all" onChange={onCheck} checked={values.checkbox.all} />
+					<CheckboxDiv text="Marcar Todos" id="all" name="all" onChange={onCheck} checked={values.all} />
 					<CheckboxDiv text="RPA" id="rpa" name="rpa" onChange={onCheck} checked={values.checkbox.rpa} />
 					<CheckboxDiv text="Produto Digital" id="dig-prod" name="digProd" onChange={onCheck} checked={values.checkbox.digProd} />
 					<CheckboxDiv text="Analystics" id="analystics" name="analystics" onChange={onCheck} checked={values.checkbox.analystics} />
