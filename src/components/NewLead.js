@@ -84,13 +84,14 @@ const NewLead = () => {
 		}
 	}
 
-	function onChange(event) {
+	const onChange = (event) => {
 		const { value, name } = event.target;
 		setValues({
 			...values,
 			[name]: value,
 		});
-	}
+	};
+
 	let errorsCheckbox = values.errors.checkbox;
 	let errorsCheckboxLabels = [];
 	for (let index in errorsCheckbox) {

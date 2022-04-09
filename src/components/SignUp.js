@@ -33,13 +33,13 @@ const SignUp = () => {
 		}
 	};
 
-	function onChange(event) {
+	const onChange = (event) => {
 		const { value, name } = event.target;
 		setValues({
 			...values,
 			[name]: value,
 		});
-	}
+	};
 	
 	return (
 		<div className="user-signup">

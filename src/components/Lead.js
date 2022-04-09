@@ -14,24 +14,11 @@ function initialState() {
 
 const Lead = () => {
 	const [values, setValues] = useState(initialState);
-	let navigate = useNavigate();
-
-	const onSubmit = (e) => {
-		// prevent the page to reload and loose information
-		e.preventDefault()
-	};
+	const navigate = useNavigate();
 
 	const onCLick = (event) => {
 		navigate("/lead/new");
 	};
-
-	function onChange(event) {
-		const { value, name } = event.target;
-		setValues({
-			...values,
-			[name]: value,
-		});
-	}
 
 	return (
 		<div className="lead">
