@@ -2,11 +2,19 @@ import React, { useState } from "react";
 import InputDiv from "./InputDiv";
 
 function initialState() {
-	return { name: '', phone: '', mail: '', valid: false, all: false, rpa: false,
+	return { name: '', phone: '', mail: '', valid: false,
 		errors: {
 			name: [],
 			phone: [],
-			mail: []
+			mail: [],
+			checkbox: []
+		},
+		checkbox: {
+			all: false,
+			rpa: false,
+			digProd: false,
+			analystics: false,
+			bpm: false
 		}
 	};
 }
@@ -21,17 +29,27 @@ const NewLead = () => {
 
 	function onCheck(event) {
 		const { checked, name } = event.target;
+
 		// if the chexkbox for check all is checked, check all chexkboxes
 		if (name === "all" && checked) { 
 			setValues({
 				...values,
-				[name]: checked,
-				rpa: checked,
+				checkbox: {
+					...values.checkbox,
+					all: true,
+					rpa: true,
+					digProd: true,
+					analystics: true,
+					bpm: true
+				}
 			});	
 		} else {
 			setValues({
 				...values,
-				[name]: checked,
+				checkbox: {
+					...values.checkbox,
+					[name]: checked
+				}
 			});	
 		}
 	}
@@ -54,12 +72,24 @@ const NewLead = () => {
 				</div>
 				<div>
 					<div>
-						<input id="all" type="checkbox" name="all" onChange={onCheck} checked={values.all} />
+						<input id="all" type="checkbox" name="all" onChange={onCheck} checked={values.checkbox.all} />
 						<label>Marcar Todos</label>
 					</div>
 					<div>
-						<input id="rpa" type="checkbox" name="rpa" onChange={onCheck} checked={values.rpa} />
+						<input id="rpa" type="checkbox" name="rpa" onChange={onCheck} checked={values.checkbox.rpa} />
 						<label>RPA</label>
+					</div>
+					<div>
+						<input id="dig-prod" type="checkbox" name="digProd" onChange={onCheck} checked={values.checkbox.digProd} />
+						<label>Produto Digital</label>
+					</div>
+					<div>
+						<input id="analystics" type="checkbox" name="analystics" onChange={onCheck} checked={values.checkbox.analystics} />
+						<label>Analystics</label>
+					</div>
+					<div>
+						<input id="bpm" type="checkbox" name="bpm" onChange={onCheck} checked={values.checkbox.bpm} />
+						<label>BPM</label>
 					</div>
 					<button>Registrar</button>
 				</div>
