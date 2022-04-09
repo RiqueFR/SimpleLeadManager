@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import validateNewLead from "../utils/validatorNewLead";
 import CheckboxDiv from "./CheckboxDiv";
 import InputDiv from "./InputDiv";
 
@@ -28,7 +29,7 @@ const NewLead = () => {
 		e.preventDefault()
 
 		// validate the inputs
-		const [ valid, errors ] = validate_lead();
+		const [ valid, errors ] = validateNewLead(values.name, values.phone, values.mail, values.checkbox);
 
 		setValues({
 			...values,
@@ -75,6 +76,11 @@ const NewLead = () => {
 			[name]: value,
 		});
 	}
+	let errorsCheckbox = values.errors.checkbox;
+	let errorsCheckboxLabels = [];
+	for (let index in errorsCheckbox) {
+		errorsCheckboxLabels.push(<label key={index}>{errorsCheckbox[index]}</label>);
+	}
 
 	return (
 		<div className="new-lead">
@@ -90,6 +96,7 @@ const NewLead = () => {
 					<CheckboxDiv text="Produto Digital" id="dig-prod" name="digProd" onChange={onCheck} checked={values.checkbox.digProd} />
 					<CheckboxDiv text="Analystics" id="analystics" name="analystics" onChange={onCheck} checked={values.checkbox.analystics} />
 					<CheckboxDiv text="BPM" id="bpm" name="bpm" onChange={onCheck} checked={values.checkbox.bpm} />
+					{errorsCheckboxLabels}
 					<button>Registrar</button>
 				</div>
 			</form>

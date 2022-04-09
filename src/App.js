@@ -1,12 +1,12 @@
 import logo from './logo.svg';
 import SignUp from './pages/SignUp';
+import NewLead from './pages/NewLead';
 import {
 	BrowserRouter as Router,
 	Routes,
 	Route
 } from 'react-router-dom';
 import './App.css';
-import NewLead from './components/NewLead';
 
 function App() {
   return (
