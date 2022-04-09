@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { saveNewDataToLocalStorage } from "../services/Store";
 import validateNewLead from "../utils/validatorNewLead";
 import CheckboxDiv from "./CheckboxDiv";
 import InputDiv from "./InputDiv";
@@ -36,7 +37,15 @@ const NewLead = () => {
 			errors: errors
 		});
 		if (valid) {
-			// save
+			// create the new data to be added
+			const data = {
+				name: values.name,
+				phone: values.phone,
+				mail: values.mail,
+				opportunities: values.checkbox
+			}
+			// save to Local Storage
+			saveNewDataToLocalStorage(data, 'lead')
 			// message saying it is saved
 			console.log("Salvo com sucesso");
 		}
