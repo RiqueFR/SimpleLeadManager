@@ -41,6 +41,7 @@ const NewLead = () => {
 				name: values.name,
 				phone: values.phone,
 				mail: values.mail,
+				status: "Cliente em Potencial",
 				opportunities: values.checkbox
 			}
 			// save to Local Storage
