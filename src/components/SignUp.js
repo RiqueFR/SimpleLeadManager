@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import InputDiv from "./InputDiv";
 import validate_credentials from "../utils/validator";
+import {saveNewDataToLocalStorage} from "../services/Store";
 
 function initialState() {
 	return { user: '', password: '', confPassword: '', valid: false,
@@ -28,7 +29,13 @@ const SignUp = () => {
 			errors: errors
 		});
 		if (valid) { // credentials are valid, so we can save then to the local storage
-			//save
+			const data = {
+				user: values.user,
+				password: values.password,
+				confPassword: values.confPassword
+			}
+			// save to local storage
+			saveNewDataToLocalStorage(data, 'users');
 			console.log("Conta cadastrada com sucesso");
 		}
 	};
