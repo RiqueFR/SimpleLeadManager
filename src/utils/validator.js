@@ -28,6 +28,7 @@ export default function validate(username, password, confPassword) {
 	// password should not be blank
 	if (password === '') {
 		errors.password.push("Senha é um campo obrigatório");
+		valid = false;
 	}
 	else {
 		// password should have at least 8 caracters

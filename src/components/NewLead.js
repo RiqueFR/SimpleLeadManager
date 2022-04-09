@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CheckboxDiv from "./CheckboxDiv";
 import InputDiv from "./InputDiv";
 
 function initialState() {
@@ -25,6 +26,19 @@ const NewLead = () => {
 	const onSubmit = (e) => {
 		// prevent the page to reload and loose information
 		e.preventDefault()
+
+		// validate the inputs
+		const [ valid, errors ] = validate_lead();
+
+		setValues({
+			...values,
+			errors: errors
+		});
+		if (valid) {
+			// save
+			// message saying it is saved
+			console.log("Salvo com sucesso");
+		}
 	};
 
 	function onCheck(event) {
@@ -71,26 +85,11 @@ const NewLead = () => {
 					<InputDiv text="Email" id="mail" type="text" name="mail" onChange={onChange} value={values.mail} errors={values.errors.mail} />
 				</div>
 				<div>
-					<div>
-						<input id="all" type="checkbox" name="all" onChange={onCheck} checked={values.checkbox.all} />
-						<label>Marcar Todos</label>
-					</div>
-					<div>
-						<input id="rpa" type="checkbox" name="rpa" onChange={onCheck} checked={values.checkbox.rpa} />
-						<label>RPA</label>
-					</div>
-					<div>
-						<input id="dig-prod" type="checkbox" name="digProd" onChange={onCheck} checked={values.checkbox.digProd} />
-						<label>Produto Digital</label>
-					</div>
-					<div>
-						<input id="analystics" type="checkbox" name="analystics" onChange={onCheck} checked={values.checkbox.analystics} />
-						<label>Analystics</label>
-					</div>
-					<div>
-						<input id="bpm" type="checkbox" name="bpm" onChange={onCheck} checked={values.checkbox.bpm} />
-						<label>BPM</label>
-					</div>
+					<CheckboxDiv text="Marcar Todos" id="all" name="all" onChange={onCheck} checked={values.checkbox.all} />
+					<CheckboxDiv text="RPA" id="rpa" name="rpa" onChange={onCheck} checked={values.checkbox.rpa} />
+					<CheckboxDiv text="Produto Digital" id="dig-prod" name="digProd" onChange={onCheck} checked={values.checkbox.digProd} />
+					<CheckboxDiv text="Analystics" id="analystics" name="analystics" onChange={onCheck} checked={values.checkbox.analystics} />
+					<CheckboxDiv text="BPM" id="bpm" name="bpm" onChange={onCheck} checked={values.checkbox.bpm} />
 					<button>Registrar</button>
 				</div>
 			</form>
