@@ -1,13 +1,18 @@
 function saveDataToLocalStorage(data, key) {
-	console.log(window.localStorage.setItem(key, data));
+	window.localStorage.setItem(key, data);
 }
 
 function getFromLocalStorage(key) {
 	return window.localStorage.getItem(key);
 }
 
+function getDataFromLocalStorage(key) {
+	let leads = JSON.parse(getFromLocalStorage(key) ?? '[]');
+	return leads;
+}
+
 function saveNewDataToLocalStorage(data, key) {
-	let values = JSON.parse(getFromLocalStorage(key) ?? '[]');
+	let values = getDataFromLocalStorage(key);
 	values = [
 		...values,
 		data
@@ -15,4 +20,4 @@ function saveNewDataToLocalStorage(data, key) {
 	saveDataToLocalStorage(JSON.stringify(values), key)
 }
 
-export { saveDataToLocalStorage, saveNewDataToLocalStorage, getFromLocalStorage };
+export { saveNewDataToLocalStorage, getDataFromLocalStorage };
