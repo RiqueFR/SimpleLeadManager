@@ -7,7 +7,7 @@ import {
 	Route
 } from 'react-router-dom';
 import './App.css';
-import Lead from './components/Lead';
+import Lead from './pages/Lead';
 
 function App() {
   return (
