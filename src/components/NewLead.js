@@ -60,24 +60,16 @@ const NewLead = () => {
 
 		// the all checkbox have a different behavior
 		if (name === "all") { 
-			// if it is checked, all other checkboxes need to be checked too
-			if (checked) {
-				setValues({
-					...values,
-					all: checked,
-					checkbox: {
-						rpa: true,
-						digProd: true,
-						analystics: true,
-						bpm: true
-					}
-				});
-			} else { // if not, only the all checkbox needs to change
-				setValues({
-					...values,
-					all: checked
-				});
-			}
+			setValues({
+				...values,
+				all: checked,
+				checkbox: {
+					rpa: checked,
+					digProd: checked,
+					analystics: checked,
+					bpm: checked
+				}
+			});
 		} else {
 			setValues({
 				...values,
