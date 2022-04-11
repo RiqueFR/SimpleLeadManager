@@ -4,13 +4,13 @@
 	justify-content: center;
 }
 
-form {
+.user-signup form {
 	position: relative;
 	display: grid;
 	width: 60%;
 }
 
-button {
+.user-signup form button {
 	margin: auto;
 	width: 50%;
 }

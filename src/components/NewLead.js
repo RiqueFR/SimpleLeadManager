@@ -100,7 +100,7 @@ const NewLead = () => {
 	let errorsCheckbox = values.errors.checkbox;
 	let errorsCheckboxLabels = [];
 	for (let index in errorsCheckbox) {
-		errorsCheckboxLabels.push(<label key={index}>{errorsCheckbox[index]}</label>);
+		errorsCheckboxLabels.push(<label className="errors" key={index}>{errorsCheckbox[index]}</label>);
 	}
 
 	return (
@@ -111,17 +111,19 @@ const NewLead = () => {
 					<InputDiv text="Telefone" id="phone" type="text" name="phone" onChange={onChange} value={values.phone} errors={values.errors.phone} />
 					<InputDiv text="Email" id="mail" type="text" name="mail" onChange={onChange} value={values.mail} errors={values.errors.mail} />
 				</div>
-				<div>
+				<div className="checkbox">
 					<CheckboxDiv text="Marcar Todos" id="all" name="all" onChange={onCheck} checked={values.all} />
 					<CheckboxDiv text="RPA" id="rpa" name="rpa" onChange={onCheck} checked={values.checkbox.rpa} />
 					<CheckboxDiv text="Produto Digital" id="dig-prod" name="digProd" onChange={onCheck} checked={values.checkbox.digProd} />
 					<CheckboxDiv text="Analystics" id="analystics" name="analystics" onChange={onCheck} checked={values.checkbox.analystics} />
 					<CheckboxDiv text="BPM" id="bpm" name="bpm" onChange={onCheck} checked={values.checkbox.bpm} />
-					{errorsCheckboxLabels}
+					<div>
+						{errorsCheckboxLabels}
+					</div>
 					<button>Registrar</button>
-					<ToastContainer autoClose={10000} />
 				</div>
 			</form>
+			<ToastContainer autoClose={10000} />
 		</div>
 	);
 };
