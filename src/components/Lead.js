@@ -55,7 +55,7 @@ class Col extends React.Component {
 	leads = getDataFromLocalStorage('lead');
 	render() {
 		return (
-			<Droppable droppableId={this.props.dropId}>
+			<Droppable droppableId={this.props.dropId} direction="horizontal">
 				{
 					(provided, snapshot) => (
 						<div
