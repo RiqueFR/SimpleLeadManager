@@ -1,9 +1,9 @@
 import React from "react";
-import SignUp from "../components/SignUp";
+import SignUpController from "../controllers/SignUp";
 import './SignUp.css';
 
 const SignUpPage = () => {
-	return (<SignUp />);
+	return (<SignUpController />);
 };
 
 export default SignUpPage;
