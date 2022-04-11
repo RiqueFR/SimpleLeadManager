@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import InputDiv from "./InputDiv";
 import validate_credentials from "../utils/validator";
 import { registerUser } from "../services/User";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function initialState() {
 	return { user: '', password: '', confPassword: '', valid: false,
@@ -33,10 +35,15 @@ const SignUp = () => {
 				password: values.password,
 			}
 			// save to local storage
-			if (registerUser(data)) // if user register successfully
-				console.log("Conta cadastrada com sucesso");
-			else
-				console.log("Usuário já cadastrado");
+			if (registerUser(data)) { // if user register successfully
+				toast.success("Conta cadastrada com sucesso", {
+					position: toast.POSITION.TOP_RIGHT
+				})
+			} else {
+				toast.error("Usuário já cadastrado", {
+					position: toast.POSITION.TOP_RIGHT
+				})
+			}
 		}
 	};
 
@@ -56,6 +63,7 @@ const SignUp = () => {
 				<InputDiv text="Confirmação Password" id="conf-password" type="password" name="confPassword" onChange={onChange} value={values.confPassword} errors={values.errors.confPassword} />
 				<button>Registrar</button>
 			</form>
+			<ToastContainer autoClose={10000} />
 		</div>
 	);
 }
