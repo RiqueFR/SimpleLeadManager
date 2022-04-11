@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import InputDiv from "./InputDiv";
 import validate_credentials from "../utils/validator";
-import {saveNewDataToLocalStorage} from "../services/Store";
+import { registerUser } from "../services/User";
 
 function initialState() {
 	return { user: '', password: '', confPassword: '', valid: false,
@@ -23,7 +23,6 @@ const SignUp = () => {
 		
 		// inputs validation
 		const [valid, errors] = validate_credentials(values.user, values.password, values.confPassword);
-		console.log(valid, errors);
 		setValues({
 			...values,
 			errors: errors
@@ -32,11 +31,12 @@ const SignUp = () => {
 			const data = {
 				user: values.user,
 				password: values.password,
-				confPassword: values.confPassword
 			}
 			// save to local storage
-			saveNewDataToLocalStorage(data, 'users');
-			console.log("Conta cadastrada com sucesso");
+			if (registerUser(data)) // if user register successfully
+				console.log("Conta cadastrada com sucesso");
+			else
+				console.log("Usuário já cadastrado");
 		}
 	};
 
