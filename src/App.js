@@ -9,12 +9,12 @@ import './App.css';
 
 import SignUp from './pages/SignUp';
 import Lead from './pages/Lead';
-import Nav from './components/Nav';
+import NavController from './controllers/Nav';
 
 function App() {
   return (
 	  <Router>
-		  <Nav />
+		  <NavController />
 		  <div className="App">
 			  <Routes>
 				  <Route exact path="/" element={<h1>Home</h1>} />
