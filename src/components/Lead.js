@@ -1,83 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { DragDropContext } from 'react-beautiful-dnd'
+
 import { getDataFromLocalStorage } from "../services/Store";
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import {updateLeadStatus} from "../services/Lead";
+import { updateLeadStatus } from "../services/Lead";
 
-
-const grid = 8;
-
-const getItemStyle = (isDragging, draggableStyle) => ({
-  // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'white',
-
-  // styles we need to apply on draggables
-  ...draggableStyle,
-});
-
-const getListStyle = snapshot => ({
-	transition: "background-colour 0.2s ease",
-	background: snapshot.isDraggingOver ? 'lightblue' : 'white',
-});
-
-class LeadObj extends React.Component {
-	render() {
-		return (
-			<Draggable draggableId={this.props.dragId} index={this.props.indexDrag}>
-				{(provided, snapshot) => (
-					<div className="obj"
-						{...provided.draggableProps}
-						{...provided.dragHandleProps}
-						ref={provided.innerRef}
-						style={getItemStyle(
-								snapshot.isDragging,
-								provided.draggableProps.style)
-						}
-					>
-						{this.props.content}
-					</div>
-				)}
-			</Draggable>
-		);
-	}
-}
-
-class Col extends React.Component {
-	render() {
-		return (
-			<div className="col">
-				<h2 className="title">{this.props.title}</h2>
-				<Droppable droppableId={this.props.dropId}>
-					{
-						(provided, snapshot) => (
-							<div
-								className="content"
-								ref={provided.innerRef}
-								{...provided.droppableProps}
-								style={getListStyle(snapshot)}
-							>
-								{this.props.data.map((lead, index) => {
-									return <LeadObj key={lead.id} dragId={`drag-${lead.id}`} indexDrag={index} content={lead.name} />;
-								})}
-								{provided.placeholder}
-							</div>
-						)
-					}
-				</Droppable>
-			</div>
-		);
-	}
-}
-
-class Row extends React.Component {
-	render() {
-		return(
-				<DragDropContext onDragEnd={this.props.onDragEnd}>
-					<Col dropId={this.props.dropId} data={this.props.data} />
-				</DragDropContext>
-		);
-	}
-}
+import Col from "./Col";
 
 const Lead = () => {
 	const leadsByStatus = (leads, search) => {
@@ -174,21 +102,6 @@ const Lead = () => {
 			</div>
 		</div>
 	);
-
-	/*
-	return (
-		<div className="lead">
-			<button onClick={onClick}>Novo Lead (+)</button>
-			<div className="table">
-				{leads.map((lead, index) => {
-					return (
-						<Row key={index} dropId={`drop-${index}`} data={[lead, null, null]} />
-					);
-				})}
-			</div>
-		</div>
-	);
-	*/
 };
 
 export default Lead;
