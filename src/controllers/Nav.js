@@ -1,7 +1,8 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 
 const NavController = () => {
+	const navigate = useNavigate();
 	const location = useLocation();
 	const getTitle = () => {
 		const pages = [{
@@ -26,7 +27,11 @@ const NavController = () => {
 	};
 	const title = getTitle();
 
-	return (<Nav title={title} />);
+	const onClick = () => {
+		navigate("/");
+	};
+
+	return (<Nav title={title} onClick={onClick} />);
 }
 
 export default NavController;

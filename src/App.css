@@ -43,6 +43,7 @@
 	padding-bottom: 50px;
 }
 .nav-bar img {
+	cursor: pointer;
 	height: 100%;
 }
 .nav-bar h1 {

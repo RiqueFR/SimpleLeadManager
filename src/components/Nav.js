@@ -1,9 +1,9 @@
 import React from "react";
 
-const Nav = ({ title }) => {
+const Nav = ({ title, onClick }) => {
 	return (
 		<div className="nav-bar">
-				<img src={process.env.PUBLIC_URL + "/elo.svg"} alt="logo" />
+				<img src={process.env.PUBLIC_URL + "/elo.svg"} onClick={onClick} alt="logo" />
 				<h1>{title}</h1>
 		</div>
 	);
