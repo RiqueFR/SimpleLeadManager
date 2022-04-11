@@ -3,6 +3,8 @@ import {registerLead} from "../services/Lead";
 import validateNewLead from "../utils/validatorNewLead";
 import CheckboxDiv from "./CheckboxDiv";
 import InputDiv from "./InputDiv";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function initialState() {
 	return { name: '', phone: '', mail: '', valid: false, all: false,
@@ -46,6 +48,9 @@ const NewLead = () => {
 			// save to Local Storage
 			registerLead(data);
 			// message saying it is saved
+			toast.success("Lead salvo", {
+				position: toast.POSITION.TOP_RIGHT
+			});
 			console.log("Salvo com sucesso");
 		}
 	};
@@ -114,6 +119,7 @@ const NewLead = () => {
 					<CheckboxDiv text="BPM" id="bpm" name="bpm" onChange={onCheck} checked={values.checkbox.bpm} />
 					{errorsCheckboxLabels}
 					<button>Registrar</button>
+					<ToastContainer autoClose={10000} />
 				</div>
 			</form>
 		</div>
