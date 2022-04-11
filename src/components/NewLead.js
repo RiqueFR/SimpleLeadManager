@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { saveNewDataToLocalStorage } from "../services/Store";
+import {registerLead} from "../services/Lead";
 import validateNewLead from "../utils/validatorNewLead";
 import CheckboxDiv from "./CheckboxDiv";
 import InputDiv from "./InputDiv";
@@ -41,11 +41,10 @@ const NewLead = () => {
 				name: values.name,
 				phone: values.phone,
 				mail: values.mail,
-				status: "Cliente em Potencial",
 				opportunities: values.checkbox
 			}
 			// save to Local Storage
-			saveNewDataToLocalStorage(data, 'lead')
+			registerLead(data);
 			// message saying it is saved
 			console.log("Salvo com sucesso");
 		}
