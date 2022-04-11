@@ -1,9 +1,9 @@
 import React from "react";
-import Lead from "../components/Lead";
+import LeadController from "../controllers/Lead";
 import './Lead.css';
 
 const LeadPage = () => {
-	return (<Lead />);
+	return (<LeadController />);
 };
 
 export default LeadPage;
