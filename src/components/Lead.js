@@ -16,7 +16,7 @@ const Lead = () => {
 		return (result);
 	}
 
-	const [leads, setLeads] = useState(getDataFromLocalStorage('lead'));
+	const leads = getDataFromLocalStorage('lead');
 	const [lists, setLists] = useState([
 		leadsByStatus(leads, "Cliente em Potencial"),
 		leadsByStatus(leads, "Dados Confirmados"),
@@ -24,30 +24,36 @@ const Lead = () => {
 	]);
 	const navigate = useNavigate();
 
-	const onClick = (event) => {
+	const onClick = () => {
 		navigate("/lead/new");
 	};
 
-	const onDragStart = (result) => {
-		const { source } = result;
-		let val = source.droppableId;
+	const findColSourceById = (val) => {
 		let res = null;
 		for (let i = 0; i < 3; i++) {
 			if (val === `col-${i+1}`) res = i;
 		}
-		const sourceCol = res;
+		return res;
+	};
+
+	const onDragStart = (result) => {
+		const { source } = result;
+
+		const sourceCol = findColSourceById(source.droppableId);
 
 		if (sourceCol < 2)
 			document.getElementsByClassName('content')[sourceCol+1].style.backgroundColor = 'lightgreen';
 	}
 
 	const onDragEnd = (result) => {
-		// reaorder the columns
-		const { destination, source, draggableId } = result;
+		// back the old color if it has changed due to drag start
 		let contents = document.getElementsByClassName('content');
 		for (let content of contents) {
 			content.style.backgroundColor = 'inherit';
 		}
+
+		// reorder the columns
+		const { destination, source } = result;
 
 		// if user drops out of a list
 		if (!destination) {
@@ -60,23 +66,13 @@ const Lead = () => {
 		}
 
 		// user drop on different list
-		let val = destination.droppableId;
-		let res = null;
-		for (let i = 0; i < 3; i++) {
-			if (val === `col-${i+1}`) res = i;
-		}
-		const destCol = res;
-		
-		val = source.droppableId;
-		res = null;
-		for (let i = 0; i < 3; i++) {
-			if (val === `col-${i+1}`) res = i;
-		}
-		const sourceCol = res;
+		const destCol = findColSourceById(destination.droppableId);
+		const sourceCol = findColSourceById(source.droppableId);
 
 		// only allow drop on next list
 		if(sourceCol + 1 !== destCol) return;
 
+		// update lists (remove from source and add on destination)
 		const newCol = Array.from(lists);
 		const lead = newCol[sourceCol][source.index];
 		newCol[sourceCol].splice(source.index, 1);
