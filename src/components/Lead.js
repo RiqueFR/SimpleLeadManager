@@ -8,22 +8,16 @@ import {updateLeadStatus} from "../services/Lead";
 const grid = 8;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: 'none',
-  padding: grid * 2,
-  margin: `0 ${grid}px 0 0`,
-
   // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'grey',
+  background: isDragging ? 'lightgreen' : 'white',
 
   // styles we need to apply on draggables
   ...draggableStyle,
 });
 
-const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
-  padding: grid,
-  overflow: 'auto',
+const getListStyle = snapshot => ({
+	transition: "background-colour 0.2s ease",
+	background: snapshot.isDraggingOver ? 'lightblue' : 'white',
 });
 
 class LeadObj extends React.Component {
@@ -35,6 +29,10 @@ class LeadObj extends React.Component {
 						{...provided.draggableProps}
 						{...provided.dragHandleProps}
 						ref={provided.innerRef}
+						style={getItemStyle(
+								snapshot.isDragging,
+								provided.draggableProps.style)
+						}
 					>
 						{this.props.content}
 					</div>
@@ -46,10 +44,9 @@ class LeadObj extends React.Component {
 
 class Col extends React.Component {
 	render() {
-		console.log("renderrr");
 		return (
 			<div className="col">
-				<h2>{this.props.title}</h2>
+				<h2 className="title">{this.props.title}</h2>
 				<Droppable droppableId={this.props.dropId}>
 					{
 						(provided, snapshot) => (
@@ -57,9 +54,9 @@ class Col extends React.Component {
 								className="content"
 								ref={provided.innerRef}
 								{...provided.droppableProps}
+								style={getListStyle(snapshot)}
 							>
 								{this.props.data.map((lead, index) => {
-									console.log(`drag-${lead.id}`);
 									return <LeadObj key={lead.id} dragId={`drag-${lead.id}`} indexDrag={index} content={lead.name} />;
 								})}
 								{provided.placeholder}
@@ -103,20 +100,34 @@ const Lead = () => {
 		navigate("/lead/new");
 	};
 
+	const onDragStart = (result) => {
+		const { source } = result;
+		let val = source.droppableId;
+		let res = null;
+		for (let i = 0; i < 3; i++) {
+			if (val === `col-${i+1}`) res = i;
+		}
+		const sourceCol = res;
+
+		if (sourceCol < 2)
+			document.getElementsByClassName('content')[sourceCol+1].style.backgroundColor = 'lightgreen';
+	}
 
 	const onDragEnd = (result) => {
 		// reaorder the columns
 		const { destination, source, draggableId } = result;
+		let contents = document.getElementsByClassName('content');
+		for (let content of contents) {
+			content.style.backgroundColor = 'inherit';
+		}
 
 		// if user drops out of a list
 		if (!destination) {
-			console.log("out1");
 			return;
 		}
 
 		// if user drops in the same list
 		if (destination.droppableId === source.droppableId) {
-			console.log("out2");
 			return;
 		}
 
@@ -135,13 +146,13 @@ const Lead = () => {
 		}
 		const sourceCol = res;
 
+		// only allow drop on next list
+		if(sourceCol + 1 !== destCol) return;
+
 		const newCol = Array.from(lists);
-		console.log(newCol);
 		const lead = newCol[sourceCol][source.index];
-		console.log(lead);
 		newCol[sourceCol].splice(source.index, 1);
 		newCol[destCol].push(lead);
-		console.log(newCol);
 		setLists(newCol);
 		let status = null;
 		if(destination.droppableId === "col-1") status = "Cliente em Potencial";
@@ -155,7 +166,7 @@ const Lead = () => {
 		<div className="lead">
 			<button onClick={onClick}>Novo Lead (+)</button>
 			<div className="table">
-				<DragDropContext onDragEnd={onDragEnd}>
+				<DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
 					<Col title="Cliente em Potencial" dropId="col-1" data={lists[0]} />
 					<Col title="Dados Confirmados" dropId="col-2" data={lists[1]} />
 					<Col title="Reunião Agendada" dropId="col-3" data={lists[2]} />
