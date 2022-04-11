@@ -9,6 +9,15 @@ function searchLeadByName(name) {
 	return null;
 }
 
+function searchLeadsByStatus(search) {
+	const leads = getDataFromLocalStorage('lead');
+	let result = [];
+	for (let lead of leads) {
+		if (lead.status === search) result.push(lead);
+	}
+	return (result);
+}
+
 function updateLeadStatus(lead, status) {
 	if(lead.id < 1) return false;
 	let values = getDataFromLocalStorage('lead');
@@ -34,4 +43,4 @@ function registerLead(lead) {
 	return true;
 }
 
-export { searchLeadByName, registerLead, updateLeadStatus };
+export { searchLeadByName, searchLeadsByStatus, registerLead, updateLeadStatus };

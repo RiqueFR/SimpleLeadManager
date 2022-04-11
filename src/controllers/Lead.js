@@ -1,26 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-import { getDataFromLocalStorage } from "../services/Store";
-import { updateLeadStatus } from "../services/Lead";
+import { updateLeadStatus, searchLeadsByStatus } from "../services/Lead";
 
 import Lead from "../components/Lead";
 
 const LeadController = () => {
-	// move this function to service
-	const leadsByStatus = (leads, search) => {
-		let result = [];
-		for (let lead of leads) {
-			if (lead.status === search) result.push(lead);
-		}
-		return (result);
-	}
-
-	const leads = getDataFromLocalStorage('lead');
 	const [lists, setLists] = useState([
-		leadsByStatus(leads, "Cliente em Potencial"),
-		leadsByStatus(leads, "Dados Confirmados"),
-		leadsByStatus(leads, "Reuniao Agendada"),
+		searchLeadsByStatus("Cliente em Potencial"),
+		searchLeadsByStatus("Dados Confirmados"),
+		searchLeadsByStatus("Reuniao Agendada"),
 	]);
 	const navigate = useNavigate();
 
@@ -41,8 +30,9 @@ const LeadController = () => {
 
 		const sourceCol = findColSourceById(source.droppableId);
 
-		if (sourceCol < 2)
+		if (sourceCol < 2){
 			document.getElementsByClassName('content')[sourceCol+1].style.backgroundColor = 'lightgreen';
+		}
 	}
 
 	const onDragEnd = (result) => {
