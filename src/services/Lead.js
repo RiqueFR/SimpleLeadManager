@@ -1,4 +1,4 @@
-import { saveNewDataToLocalStorage, getDataFromLocalStorage } from './Store';
+import { saveNewDataToLocalStorage, getDataFromLocalStorage, saveDataToLocalStorage } from './Store';
 
 function searchLeadByName(name) {
 	const leads = getDataFromLocalStorage('lead');
@@ -7,6 +7,15 @@ function searchLeadByName(name) {
 			return lead;
 	}
 	return null;
+}
+
+function updateLeadStatus(lead, status) {
+	if(lead.id < 1) return false;
+	let values = getDataFromLocalStorage('lead');
+	if(lead.id > values.length) return false;
+	values[lead.id - 1].status = status;
+	saveDataToLocalStorage(values, 'lead');
+	return true
 }
 
 function registerLead(lead) {
@@ -25,4 +34,4 @@ function registerLead(lead) {
 	return true;
 }
 
-export { searchLeadByName, registerLead };
+export { searchLeadByName, registerLead, updateLeadStatus };

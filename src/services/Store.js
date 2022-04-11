@@ -1,5 +1,5 @@
 function saveDataToLocalStorage(data, key) {
-	window.localStorage.setItem(key, data);
+	window.localStorage.setItem(key, JSON.stringify(data));
 }
 
 function getFromLocalStorage(key) {
@@ -17,7 +17,7 @@ function saveNewDataToLocalStorage(data, key) {
 		...values,
 		data
 	]
-	saveDataToLocalStorage(JSON.stringify(values), key)
+	saveDataToLocalStorage(values, key)
 }
 
-export { saveNewDataToLocalStorage, getDataFromLocalStorage };
+export { saveNewDataToLocalStorage, saveDataToLocalStorage, getDataFromLocalStorage };

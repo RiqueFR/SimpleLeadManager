@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { getDataFromLocalStorage } from "../services/Store";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import {updateLeadStatus} from "../services/Lead";
 
-function initialState() {
-	return { lead: [],}
-}
 
 const grid = 8;
 
@@ -24,7 +22,6 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? 'lightblue' : 'lightgrey',
-  display: 'flex',
   padding: grid,
   overflow: 'auto',
 });
@@ -32,16 +29,12 @@ const getListStyle = isDraggingOver => ({
 class LeadObj extends React.Component {
 	render() {
 		return (
-			<Draggable draggableId={this.props.dragId} index={this.props.index}>
+			<Draggable draggableId={this.props.dragId} index={this.props.indexDrag}>
 				{(provided, snapshot) => (
 					<div className="obj"
 						{...provided.draggableProps}
 						{...provided.dragHandleProps}
 						ref={provided.innerRef}
-						style={getItemStyle(
-							snapshot.isDragging,
-							provided.draggableProps.style
-						)}
 					>
 						{this.props.content}
 					</div>
@@ -52,29 +45,29 @@ class LeadObj extends React.Component {
 }
 
 class Col extends React.Component {
-	leads = getDataFromLocalStorage('lead');
 	render() {
+		console.log("renderrr");
 		return (
-			<Droppable droppableId={this.props.dropId} direction="horizontal">
-				{
-					(provided, snapshot) => (
-						<div
-							className="content"
-							ref={provided.innerRef}
-							{...provided.droppableProps}
-							style={getListStyle(snapshot.isDraggingOver)}
-						>
-							{this.props.data.map((lead, index) => {
-								if (lead)
-									return <LeadObj key={index} dragId={`drag-${index}`} index={index} content={lead.name} />
-										else
-									return <LeadObj key={index} dragId={`drag-${index}`} index={index} content="null" />
-							})}
-							{provided.placeholder}
-						</div>
-					)
-				}
-			</Droppable>
+			<div className="col">
+				<h2>{this.props.title}</h2>
+				<Droppable droppableId={this.props.dropId}>
+					{
+						(provided, snapshot) => (
+							<div
+								className="content"
+								ref={provided.innerRef}
+								{...provided.droppableProps}
+							>
+								{this.props.data.map((lead, index) => {
+									console.log(`drag-${lead.id}`);
+									return <LeadObj key={lead.id} dragId={`drag-${lead.id}`} indexDrag={index} content={lead.name} />;
+								})}
+								{provided.placeholder}
+							</div>
+						)
+					}
+				</Droppable>
+			</div>
 		);
 	}
 }
@@ -82,27 +75,96 @@ class Col extends React.Component {
 class Row extends React.Component {
 	render() {
 		return(
-			<DragDropContext onDragEnd={this.props.onDragEnd}>
-				<Col dropId={this.props.dropId} data={this.props.data} />
-			</DragDropContext>
+				<DragDropContext onDragEnd={this.props.onDragEnd}>
+					<Col dropId={this.props.dropId} data={this.props.data} />
+				</DragDropContext>
 		);
 	}
 }
 
 const Lead = () => {
-	const [values, setValues] = useState(initialState);
-	const navigate = useNavigate();
+	const leadsByStatus = (leads, search) => {
+		let result = [];
+		for (let lead of leads) {
+			if (lead.status === search) result.push(lead);
+		}
+		return (result);
+	}
 
-	const leads = getDataFromLocalStorage('lead');
+	const [leads, setLeads] = useState(getDataFromLocalStorage('lead'));
+	const [lists, setLists] = useState([
+		leadsByStatus(leads, "Cliente em Potencial"),
+		leadsByStatus(leads, "Dados Confirmados"),
+		leadsByStatus(leads, "Reuniao Agendada"),
+	]);
+	const navigate = useNavigate();
 
 	const onClick = (event) => {
 		navigate("/lead/new");
 	};
 
-	const onDragEnd = () => {
+
+	const onDragEnd = (result) => {
 		// reaorder the columns
+		const { destination, source, draggableId } = result;
+
+		// if user drops out of a list
+		if (!destination) {
+			console.log("out1");
+			return;
+		}
+
+		// if user drops in the same list
+		if (destination.droppableId === source.droppableId) {
+			console.log("out2");
+			return;
+		}
+
+		// user drop on different list
+		let val = destination.droppableId;
+		let res = null;
+		for (let i = 0; i < 3; i++) {
+			if (val === `col-${i+1}`) res = i;
+		}
+		const destCol = res;
+		
+		val = source.droppableId;
+		res = null;
+		for (let i = 0; i < 3; i++) {
+			if (val === `col-${i+1}`) res = i;
+		}
+		const sourceCol = res;
+
+		const newCol = Array.from(lists);
+		console.log(newCol);
+		const lead = newCol[sourceCol][source.index];
+		console.log(lead);
+		newCol[sourceCol].splice(source.index, 1);
+		newCol[destCol].push(lead);
+		console.log(newCol);
+		setLists(newCol);
+		let status = null;
+		if(destination.droppableId === "col-1") status = "Cliente em Potencial";
+		else if(destination.droppableId === "col-2") status = "Dados Confirmados";
+		else status = "Reuniao Agendada";
+		updateLeadStatus(lead, status);
+		return;
 	};
 
+	return (
+		<div className="lead">
+			<button onClick={onClick}>Novo Lead (+)</button>
+			<div className="table">
+				<DragDropContext onDragEnd={onDragEnd}>
+					<Col title="Cliente em Potencial" dropId="col-1" data={lists[0]} />
+					<Col title="Dados Confirmados" dropId="col-2" data={lists[1]} />
+					<Col title="Reunião Agendada" dropId="col-3" data={lists[2]} />
+				</DragDropContext>
+			</div>
+		</div>
+	);
+
+	/*
 	return (
 		<div className="lead">
 			<button onClick={onClick}>Novo Lead (+)</button>
@@ -115,10 +177,7 @@ const Lead = () => {
 			</div>
 		</div>
 	);
+	*/
 };
-/*
-			<Row dropId="drop-1" data={teste} />
-			<Row dropId="drop-2" data={teste} />
-			<Row dropId="drop-3" data={teste} />
-				*/
+
 export default Lead;
