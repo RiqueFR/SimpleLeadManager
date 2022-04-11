@@ -9,9 +9,9 @@ import { toast } from "react-toastify";
 function initialState() {
 	return { user: '', password: '', confPassword: '', valid: false,
 		errors: {
-			username: false,
+			username: [],
 			password: [],
-			confPassword: false
+			confPassword: [] 
 		}
 	};
 }
