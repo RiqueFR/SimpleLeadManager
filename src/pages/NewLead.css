@@ -1,5 +1,6 @@
 .new-lead form {
 	position: relative;
+	padding-top: 50px;
 	margin: auto;
 	width: 90%;
 	display: flex;
@@ -12,6 +13,10 @@
 .new-lead .checkbox {
 	padding-left: 10%;
 	width: 40%;
+}
+
+.checkbox .title-op {
+	font-size: 20px;
 }
 
 .div-checkbox {

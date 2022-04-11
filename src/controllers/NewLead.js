@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { registerLead } from "../services/Lead";
@@ -7,6 +8,7 @@ import validateNewLead from "../utils/validatorNewLead";
 import NewLead from '../components/NewLead';
 
 const NewLeadController = () => {
+	const navigate = useNavigate();
 	const [inputs, setInputs] = useState({
 		name: '',
 		phone: '',
@@ -55,7 +57,11 @@ const NewLeadController = () => {
 		}
 	};
 
-	function onCheck(event) {
+	const onClick = () => {
+		navigate("/lead");
+	};
+
+	const onCheck = (event) => {
 		const { checked, name } = event.target;
 
 		// the all checkbox have a different behavior
@@ -73,7 +79,7 @@ const NewLeadController = () => {
 				[name]: checked
 			});	
 		}
-	}
+	};
 
 	const onChange = (event) => {
 		const { value, name } = event.target;
@@ -83,7 +89,7 @@ const NewLeadController = () => {
 		});
 	};
 	
-	return (<NewLead information={inputs} checkbox={checkbox} errors={errors} all={all} toast={toast} onSubmit={onSubmit} onChange={onChange} onCheck={onCheck} />);
+	return (<NewLead information={inputs} checkbox={checkbox} errors={errors} all={all} toast={toast} onSubmit={onSubmit} onClick={onClick} onChange={onChange} onCheck={onCheck} />);
 }
 
 export default NewLeadController;

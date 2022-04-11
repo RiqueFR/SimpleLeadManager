@@ -6,7 +6,7 @@ import Col from "./Col";
 const Lead = ({ lists, onClick, onDragStart, onDragEnd }) => {
 	return (
 		<div className="lead">
-			<button onClick={onClick}>Novo Lead (+)</button>
+			<button className="BUTTON_MAT" onClick={onClick}>Novo Lead (+)</button>
 			<div className="table">
 				<DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
 					<Col title="Cliente em Potencial" dropId="col-1" data={lists[0]} />

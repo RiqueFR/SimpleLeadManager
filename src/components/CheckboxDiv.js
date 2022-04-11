@@ -6,7 +6,7 @@ const CheckboxDiv= (props) => {
 			<div className="check">
 			<input id={props.id} type="checkbox" name={props.name} onChange={props.onChange} checked={props.checked} />
 				</div>
-			<label>{props.text}</label>
+			<label htmlFor={props.id}>{props.text}</label>
 		</div>
 	);
 }
