@@ -1,0 +1,34 @@
+.user-signup {
+	position: relative;
+	display: flex;
+	justify-content: center;
+}
+
+form {
+	position: relative;
+	display: grid;
+	width: 60%;
+}
+
+button {
+	margin: auto;
+	width: 50%;
+}
+
+.sign-input {
+	position: relative;
+	display: grid;
+	margin-bottom: 20px;
+}
+
+.sign-input span {
+	font-size: 20px;
+}
+
+.sign-input input {
+	height: 30px;
+}
+
+.errors {
+	color: red;
+}
