@@ -18,6 +18,11 @@
 .checkbox .title-op {
 	font-size: 20px;
 }
+.checkbox button {
+	margin-top: 20px;
+	font-size: 15px;
+	width: 50%;
+}
 
 .div-checkbox {
 	border: 2px solid lightgray;

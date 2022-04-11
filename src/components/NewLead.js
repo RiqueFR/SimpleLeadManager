@@ -26,7 +26,7 @@ const NewLead = ({ information, errors, checkbox, toast, all, onSubmit, onClick,
 					<div>
 						{errors.checkbox.map((erro, index) => (<label className="errors" key={index}>{erro}</label>))}
 					</div>
-					<button>Registrar</button>
+					<button className="BUTTON_MAT">Registrar</button>
 				</div>
 			</form>
 			<ToastContainer autoClose={10000} />
