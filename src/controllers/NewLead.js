@@ -81,6 +81,26 @@ const NewLeadController = () => {
 		}
 	};
 
+	const onPhoneChange = (event) => {
+		const isNumber = (char) => {
+			return (char >= '0' && char <= '9');
+		};
+
+		const { value } = event.target;
+		if (value.legth > 11) return;
+		let result = "";
+		for (let index in value) {
+			// check string size to limit by 11 digits
+			if (index > 10) break;
+			// check char by char and remove no number chars
+			if (isNumber(value[index])) result += value[index];
+		}
+		setInputs({
+			...inputs,
+			phone: result
+		});
+	};
+
 	const onChange = (event) => {
 		const { value, name } = event.target;
 		setInputs({
@@ -89,7 +109,7 @@ const NewLeadController = () => {
 		});
 	};
 	
-	return (<NewLead information={inputs} checkbox={checkbox} errors={errors} all={all} toast={toast} onSubmit={onSubmit} onClick={onClick} onChange={onChange} onCheck={onCheck} />);
+	return (<NewLead information={inputs} checkbox={checkbox} errors={errors} all={all} toast={toast} onSubmit={onSubmit} onClick={onClick} onChange={onChange} onPhoneChange={onPhoneChange} onCheck={onCheck} />);
 }
 
 export default NewLeadController;

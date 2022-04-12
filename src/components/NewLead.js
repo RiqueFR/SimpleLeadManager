@@ -6,14 +6,14 @@ import InputDiv from "./InputDiv";
 
 import 'react-toastify/dist/ReactToastify.css';
 
-const NewLead = ({ information, errors, checkbox, toast, all, onSubmit, onClick, onChange, onCheck }) => {
+const NewLead = ({ information, errors, checkbox, toast, all, onSubmit, onClick, onChange, onPhoneChange, onCheck }) => {
 	return (
 		<div className="new-lead">
 			<button onClick={onClick} className="BUTTON_MAT">Voltar</button>
 			<form onSubmit={onSubmit}>
 				<div className="text-input">
 					<InputDiv text="Nome" id="name" type="text" name="name" onChange={onChange} value={information.name} errors={errors.name} />
-					<InputDiv text="Telefone" id="phone" type="text" name="phone" onChange={onChange} value={information.phone} errors={errors.phone} />
+					<InputDiv text="Telefone" id="phone" type="text" name="phone" onChange={onPhoneChange} value={information.phone} errors={errors.phone} />
 					<InputDiv text="Email" id="mail" type="text" name="mail" onChange={onChange} value={information.mail} errors={errors.mail} />
 				</div>
 				<div className="checkbox">

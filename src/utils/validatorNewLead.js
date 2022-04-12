@@ -1,3 +1,7 @@
+function hasOnlyNumbers(string) {
+	return /^\d+$/.test(string);
+}
+
 export default function validateNewLead(name, phone, mail, checkbox) {
 	// inputs validation
 	let errors= {
@@ -18,6 +22,15 @@ export default function validateNewLead(name, phone, mail, checkbox) {
 	if (phone === '') {
 		errors.phone.push("Telefone é um campo obrigatório");
 		valid = false;
+	} else {
+		if (!hasOnlyNumbers(phone)) {
+			errors.phone.push("Telefone só pode receber números");
+			valid = false;
+		}
+		if (!(phone.length === 10 || phone.length === 11)) {
+			errors.phone.push("Informe um Telefone válido, com DDD + Número");
+			valid = false;
+		}
 	}
 
 	// confirmation password should not be blank
