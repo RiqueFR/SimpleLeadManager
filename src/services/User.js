@@ -9,6 +9,14 @@ function searchUserByUsername(username) {
 	return null;
 }
 
+function login(username, password) {
+	const user = searchUserByUsername(username);
+	if (user) {
+		if (user.password === password) return true;
+	}
+	return false;
+}
+
 function registerUser(user) {
 	// check if user is already register
 	if (searchUserByUsername(user.user)) return false;
@@ -18,4 +26,4 @@ function registerUser(user) {
 	return true;
 }
 
-export { searchUserByUsername, registerUser };
+export { searchUserByUsername, registerUser, login };
