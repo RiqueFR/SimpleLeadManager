@@ -1,5 +1,5 @@
 import React from "react";
-import LeadController from "../controllers/Lead";
+import LeadController from "../../controllers/Lead";
 import './Lead.css';
 
 const LeadPage = () => {

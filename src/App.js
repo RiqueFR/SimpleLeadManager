@@ -1,4 +1,3 @@
-import NewLead from './pages/NewLead';
 import {
 	BrowserRouter as Router,
 	Routes,
@@ -7,9 +6,10 @@ import {
 
 import './App.css';
 
-import HomePage from './pages/Home';
-import SignUp from './pages/SignUp';
-import Lead from './pages/Lead';
+import HomePage from './pages/Home/Home';
+import SignUp from './pages/SignUp/SignUp';
+import Lead from './pages/Lead/Lead';
+import NewLead from './pages/NewLead/NewLead';
 import NavController from './controllers/Nav';
 
 function App() {

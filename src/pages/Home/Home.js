@@ -1,6 +1,6 @@
 import React from "react";
 
-import HomeController from "../controllers/Home";
+import HomeController from "../../controllers/Home";
 
 import './Home.css';
 
