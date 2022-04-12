@@ -7,6 +7,7 @@ import {
 
 import './App.css';
 
+import HomePage from './pages/Home';
 import SignUp from './pages/SignUp';
 import Lead from './pages/Lead';
 import NavController from './controllers/Nav';
@@ -17,7 +18,7 @@ function App() {
 		  <NavController />
 		  <div className="App">
 			  <Routes>
-				  <Route exact path="/" element={<h1>Home</h1>} />
+				  <Route exact path="/" element={<HomePage />} />
 				  <Route path="/lead/new" element={<NewLead />} />
 				  <Route path="/lead" element={<Lead />} />
 				  <Route path="/cadastro" element={<SignUp />} />

@@ -1,0 +1,10 @@
+.home {
+	display: grid;
+}
+
+.home button {
+	width: 50%;
+	height: 70%;
+	margin: auto;
+	margin-top: 80px;
+}
