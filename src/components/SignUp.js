@@ -8,7 +8,7 @@ const SignUp = ({ data, onSubmit, onChange, toast }) => {
 	return (
 		<div className="user-signup">
 			<form onSubmit={onSubmit}>
-				<InputDiv text="Usuário" id="user" type="text" name="user" onChange={onChange} value={data.user} errors={data.errors.username} />
+				<InputDiv text="Usuário" id="user" type="text" name="username" onChange={onChange} value={data.username} errors={data.errors.username} />
 				<InputDiv text="Password" id="password" type="password" name="password" onChange={onChange} value={data.password} errors={data.errors.password} />
 				<InputDiv text="Confirmação Password" id="conf-password" type="password" name="confPassword" onChange={onChange} value={data.confPassword} errors={data.errors.confPassword} />
 				<button className="BUTTON_MAT">Registrar</button>

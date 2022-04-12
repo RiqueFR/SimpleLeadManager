@@ -7,7 +7,7 @@ import SignUp from "../components/SignUp";
 import { toast } from "react-toastify";
 
 function initialState() {
-	return { user: '', password: '', confPassword: '', valid: false,
+	return { username: '', password: '', confPassword: '', valid: false,
 		errors: {
 			username: [],
 			password: [],
@@ -24,14 +24,14 @@ const SignUpController = () => {
 		e.preventDefault()
 		
 		// inputs validation
-		const [valid, errors] = validate_credentials(values.user, values.password, values.confPassword);
+		const [valid, errors] = validate_credentials(values.username, values.password, values.confPassword);
 		setValues({
 			...values,
 			errors: errors
 		});
 		if (valid) { // credentials are valid, so we can save then to the local storage
 			const data = {
-				user: values.user,
+				user: values.username,
 				password: values.password,
 			}
 			// save to local storage
@@ -52,6 +52,10 @@ const SignUpController = () => {
 		setValues({
 			...values,
 			[name]: value,
+			errors: {
+				...values.errors,
+				[name]: []
+			}
 		});
 	};
 	

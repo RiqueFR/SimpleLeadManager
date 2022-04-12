@@ -79,6 +79,10 @@ const NewLeadController = () => {
 				[name]: checked
 			});	
 		}
+		setErrors({
+			...errors,
+			checkbox: []
+		})
 	};
 
 	const onPhoneChange = (event) => {
@@ -99,6 +103,10 @@ const NewLeadController = () => {
 			...inputs,
 			phone: result
 		});
+		setErrors({
+			...errors,
+			phone: []
+		})
 	};
 
 	const onChange = (event) => {
@@ -107,6 +115,10 @@ const NewLeadController = () => {
 			...inputs,
 			[name]: value,
 		});
+		setErrors({
+			...errors,
+			[name]: []
+		})
 	};
 	
 	return (<NewLead information={inputs} checkbox={checkbox} errors={errors} all={all} toast={toast} onSubmit={onSubmit} onClick={onClick} onChange={onChange} onPhoneChange={onPhoneChange} onCheck={onCheck} />);
