@@ -12,6 +12,9 @@ const NavController = () => {
 			page: "/lead",
 			title: "Leads"
 		}, {
+			page: "/login",
+			title: "Login de Usuários"
+		}, {
 			page: "/cadastro",
 			title: "Cadastro de Usuários"
 		}, {
