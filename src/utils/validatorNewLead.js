@@ -2,6 +2,11 @@ function hasOnlyNumbers(string) {
 	return /^\d+$/.test(string);
 }
 
+function hasValidEmail(string) {
+	// Don't allow more than one @
+	return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(string);
+}
+
 export default function validateNewLead(name, phone, mail, checkbox) {
 	// inputs validation
 	let errors= {
@@ -37,6 +42,11 @@ export default function validateNewLead(name, phone, mail, checkbox) {
 	if (mail === '') {
 		errors.mail.push("Email é um campo obrigatório");
 		valid = false;
+	} else {
+		if(!hasValidEmail(mail)) {
+			errors.mail.push("Insira um Email válido");
+			valid = false;
+		}
 	}
 
 	let anyChecked = false;
